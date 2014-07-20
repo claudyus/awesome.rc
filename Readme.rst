@@ -13,4 +13,4 @@ https://wiki.archlinux.org/index.php/Awesome#Debugging_rc.lua
 
 ::
 
-  $ sh ~/.config/awesome/awmtt/awmtt start --config=~/.config/awesome/rc.lua
+  $ bash ~/.config/awesome/awmtt/awmtt start --config=~/.config/awesome/rc.lua
