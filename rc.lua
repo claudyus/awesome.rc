@@ -10,7 +10,10 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+
+-- My imports
 require("volume")
+local battery = require("awesome-batteryInfo/battery")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -169,6 +172,8 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+batterywidget = wibox.widget.textbox()
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -198,6 +203,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(batterywidget)
     right_layout:add(volume_widget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
@@ -478,6 +484,12 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
+batterywidget_timer = timer({timeout = 10})
+batterywidget_timer:connect_signal("timeout", function()
+    batterywidget:set_text(batteryInfo("BAT0"))
+end)
+batterywidget_timer:start()
+
 function run_once(prg)
     if not prg then
         do return nil end
@@ -491,5 +503,5 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-os.execute("nm-applet &")
-os.execute("xscreensaver -no-splash &")
+run_once("nm-applet &")
+run_once("xscreensaver -no-splash &")
