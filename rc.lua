@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+require("volume")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -197,6 +198,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(volume_widget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -299,7 +301,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     --CUSTOM
-    awful.key({ modkey,           }, "z", function () awful.util.spawn("xscreensaver-command -lock") end)
+    awful.key({ modkey }, "z", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ }, "XF86AudioRaiseVolume", function ()
+      awful.util.spawn("amixer -q -D default set Master 3%+", false) end),
+    awful.key({ }, "XF86AudioLowerVolume", function ()
+      awful.util.spawn("amixer -q -D default set Master 3%-", false) end),
+    awful.key({ modkey }, "<", function ()
+      awful.util.spawn("amixer -q -D default set Master 9%-", false) end),
+    awful.key({ }, "XF86AudioMute", function ()
+      awful.util.spawn("amixer -q -D default set Master toggle", false) end)
 )
 
 clientkeys = awful.util.table.join(

@@ -3,6 +3,13 @@ AWESOME WM Config & Tools
 
 This repo contains my `awesome <http://awesome.naquadah.org/>`_ config files.
 
+Custom binds
+------------
+
+Mod4 + z - Lock Screen (require xscreensaver)
+Mod4 + < - Volume -9%
+XF86AudioLowerVolume - Volume -3%
+XF86AudioLowerVolume - Volume +3%
 
 Debugging lua script
 --------------------
