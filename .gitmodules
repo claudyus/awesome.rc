@@ -1,0 +1,3 @@
+[submodule "awesome-batteryInfo"]
+	path = awesome-batteryInfo
+	url = https://github.com/koentje/awesome-batteryInfo.git
